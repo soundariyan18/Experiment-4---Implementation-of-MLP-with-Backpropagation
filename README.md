@@ -118,7 +118,99 @@ Normalize our dataset.
 8. Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
 
 ## PROGRAM 
+```
+Developed by : M.N.Soundariyan
 
-## OUTPUT 
+Reg: 212222230146
+```
+
+```
+# Include necessary libraries
+import pandas as pd
+import sklearn
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+
+df = pd.read_csv('IRIS.csv')
+df.head
+
+names = ['sepal-length','sepal-width','petal-length','petal-width','Class']
+
+# Take first 4 columns ans assign them to variable "X"
+X = df.iloc[:,0:4]
+# Take first 5th columns and assign them to variable "Y"
+Y = df.select_dtypes(include=[object])
+X.head()
+Y.head()
+
+# Y contains all categories or classes
+Y.species.unique()
+
+# Transforming categorial into numerical values
+le = preprocessing.LabelEncoder()
+Y = Y.apply(le.fit_transform)
+Y.head()
+
+# Train and test split
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size = 0.20)
+
+# Feature Scaling
+scaler = StandardScaler() 
+scaler.fit(X_train)
+X_train = scaler.transform(X_train)
+X_test = scaler.transform(X_test)
+mlp = MLPClassifier(hidden_layer_sizes=(10,10,10),max_iter=1000)
+mlp.fit(X_train,Y_train.values.ravel())
+predictions = mlp.predict(X_test)
+print(predictions)
+
+# Evaluation of algorithm performance in classifying flowers
+print(confusion_matrix(Y_test,predictions))
+print(classification_report(Y_test,predictions))
+
+```
+
+## OUTPUT :
+
+Dataset Labels
+
+
+![image](https://github.com/soundariyan18/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/119393307/260f39b2-c297-47ae-bd99-b22391e7610f)
+
+X.head()
+
+
+![image](https://github.com/soundariyan18/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/119393307/9673be5f-c15b-4602-8c93-d249b8b76c2e)
+
+Y.head()
+
+
+![image](https://github.com/soundariyan18/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/119393307/ec0eff99-ac77-4db5-b808-a11237dce88e)
+
+Unique Values in Y
+
+
+![image](https://github.com/soundariyan18/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/119393307/3d8285dd-9591-402f-bb16-bfd149b83411)
+
+Predictions
+
+
+![image](https://github.com/soundariyan18/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/119393307/0e843b0b-a611-437a-a154-5f362c3f85c7)
+
+Confusion Matrix
+
+
+![image](https://github.com/soundariyan18/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/119393307/39c7363a-0eb8-479d-b7b7-4e01ff4a509c)
+
+Classification Report
+
+
+![image](https://github.com/soundariyan18/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/119393307/941d80cb-5b83-42e4-a582-e1efee096524)
+
 
 ## RESULT
+
+Thus, the program to implement Multilayer Perceptron for Multi Classification is successfully implemented.
